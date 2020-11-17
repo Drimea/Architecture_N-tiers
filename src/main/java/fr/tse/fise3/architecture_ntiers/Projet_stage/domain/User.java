@@ -19,8 +19,8 @@ public class User {
     private String lastname;
     private String password;
 
-    @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade={CascadeType.ALL}, orphanRemoval=true)
-    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy="intern", fetch = FetchType.EAGER, cascade={CascadeType.ALL}, orphanRemoval=true)
+    @JsonIgnoreProperties("intern")
     @EqualsAndHashCode.Exclude
     private Set<Internship> internships;
 
