@@ -22,4 +22,8 @@ public class Internship {
     private User intern;
     @ManyToOne
     private Enterprise enterprise;
+
+    public Internship() {
+
+    }
 }

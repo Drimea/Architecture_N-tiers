@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -25,4 +26,8 @@ public class Enterprise {
     @JsonIgnoreProperties("enterprise")
     @EqualsAndHashCode.Exclude
     private Set<Internship> internships;
+
+    public Enterprise() {
+        this.internships = new HashSet<Internship>();
+    }
 }
