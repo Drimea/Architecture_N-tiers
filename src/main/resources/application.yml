@@ -5,10 +5,6 @@ spring:
       enabled: true
   jpa:
     generate-ddl: true
-  boot:
-    admin:
-      client:
-        url: "http://localhost:${PORT:8080}"
 management:
   endpoints:
     web:
