@@ -2,10 +2,7 @@ package fr.tse.fise3.architecture_ntiers.Projet_stage.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -20,6 +17,7 @@ public class Internship {
 
     @ManyToOne
     private User intern;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="ENTERPRISE_ID", nullable=true)
     private Enterprise enterprise;
 }
