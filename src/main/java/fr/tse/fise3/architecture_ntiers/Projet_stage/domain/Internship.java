@@ -17,7 +17,7 @@ public class Internship {
 
     @ManyToOne
     private User intern;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name="ENTERPRISE_ID", nullable=true)
     private Enterprise enterprise;
 }

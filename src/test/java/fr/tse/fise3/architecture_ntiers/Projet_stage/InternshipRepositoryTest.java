@@ -1,6 +1,6 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage;
 
-import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.InternshipRepository;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.InternshipDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Internship;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,11 +20,11 @@ import java.util.List;
 public class InternshipRepositoryTest {
 
     @Autowired
-    private InternshipRepository internshipRepository;
+    private InternshipDao internshipDao;
 
     @Test
     public void FindAllByCountryTest() {
-        List<Internship> internships = internshipRepository.FindAllByCountry("France");
+        List<Internship> internships = internshipDao.FindAllByCountry("France");
         assertEquals(1, internships.size());
         assertEquals("France", internships.get(0).getEnterprise().getCountry());
     }

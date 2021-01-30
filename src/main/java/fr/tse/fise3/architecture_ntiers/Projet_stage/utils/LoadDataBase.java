@@ -1,9 +1,9 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage.utils;
 
 
-import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.EnterpriseRepository;
-import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.InternshipRepository;
-import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserRepository;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.EnterpriseDao;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.InternshipDao;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Enterprise;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Internship;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
@@ -22,18 +22,17 @@ public class LoadDataBase {
 
     @Bean
     @Profile("test")
-    CommandLineRunner initDatabase(InternshipRepository internshipRepository,
-                                   EnterpriseRepository enterpriseRepository,
-                                   UserRepository userRepository) {
+    CommandLineRunner initDatabase(InternshipDao internshipDao,
+                                   UserDao userDao,
+                                   EnterpriseDao enterpriseDao) {
 
         return args -> {
-            initRepositories(internshipRepository, enterpriseRepository, userRepository);
+            initRepositories(internshipDao, userDao, enterpriseDao);
         };
     }
 
-    private void initRepositories(InternshipRepository internshipRepository,
-                                  EnterpriseRepository enterpriseRepository,
-                                  UserRepository userRepository) {
+    private void initRepositories(InternshipDao internshipDao, UserDao userDao,
+                                  EnterpriseDao enterpriseDao) {
         Enterprise ent1 = new Enterprise();
         ent1.setActivity("Rechecrhe");
         ent1.setAddress("25 rue du Docteur Rémy Annino");
@@ -42,14 +41,14 @@ public class LoadDataBase {
         ent1.setEmployeeNumber(50);
         ent1.setName("Laboratoire Hubert Curien");
         ent1.setNoSIRET(123456789);
-        enterpriseRepository.save(ent1);
+        enterpriseDao.create(ent1);
 
         User user1 = new User();
         user1.setEmail("oui.non@telecom-st-etienne.fr");
         user1.setFirstname("Oui");
         user1.setLastname("Non");
         user1.setPassword("0u1N0n");
-        userRepository.save(user1);
+        userDao.create(user1);
 
         Internship internship1 = new Internship();
         internship1.setBeginDate(Date.from(Instant.now()));
@@ -57,6 +56,7 @@ public class LoadDataBase {
         internship1.setEnterprise(ent1);
         internship1.setIntern(user1);
         internship1.setType("SFE");
+        internshipDao.create(internship1);
     }
 
 
