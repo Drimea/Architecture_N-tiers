@@ -16,8 +16,9 @@ public class Internship {
     private String type;
 
     @ManyToOne
+    @JoinColumn(name="USER_ID", nullable=false)
     private User intern;
     @ManyToOne()
-    @JoinColumn(name="ENTERPRISE_ID", nullable=true)
+    @JoinColumn(name="ENTERPRISE_ID", nullable=false)
     private Enterprise enterprise;
 }
