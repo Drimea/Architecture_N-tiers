@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,13 +40,15 @@ public class InternshipRepositoryTest {
 
     @Test
     public void FindAllByDateTest() {
-        List<Internship> internships = internshipDao.FindAllByDate(Date.from(Instant.ofEpochSecond(1111111111100l)));
+        List<Internship> internships = internshipDao.FindAllByDate(
+                LocalDate.of(2049, 11, 3));
         assertEquals(1, internships.size());
     }
 
     @Test
     public void FindAllByDateFailTest() {
-        List<Internship> internships = internshipDao.FindAllByDate(Date.from(Instant.ofEpochSecond(1111111111122l)));
+        List<Internship> internships = internshipDao.FindAllByDate(
+                LocalDate.of(2051, 11, 3));
         assertEquals(0, internships.size());
     }
 

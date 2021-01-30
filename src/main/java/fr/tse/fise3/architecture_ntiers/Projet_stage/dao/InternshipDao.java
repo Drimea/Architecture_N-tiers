@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class InternshipDao {
         em.persist(internship);
     }
 
-    public List<Internship> FindAllByDate(Date date) {
+    public List<Internship> FindAllByDate(LocalDate date) {
         Query q = em.createQuery(
                 "SELECT DISTINCT i " +
                         "FROM Internship i " +

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Configuration
@@ -51,8 +52,8 @@ public class LoadDataBase {
         userDao.create(user1);
 
         Internship internship1 = new Internship();
-        internship1.setBeginDate(Date.from(Instant.now()));
-        internship1.setEndDate(Date.from(Instant.ofEpochSecond(1111111111111l)));
+        internship1.setBeginDate(LocalDate.now());
+        internship1.setEndDate(LocalDate.of(2050, 11, 3));
         internship1.setEnterprise(ent1);
         internship1.setIntern(user1);
         internship1.setType("SFE");
