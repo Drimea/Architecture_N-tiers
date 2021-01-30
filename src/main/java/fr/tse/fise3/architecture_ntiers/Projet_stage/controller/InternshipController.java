@@ -27,7 +27,7 @@ public class InternshipController {
     @GetMapping(path = "/internshipsByDate")
     public Collection<Internship> getInternshipsOfDate(
             @RequestParam(name = "date")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date) {
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return internshipDao.FindAllByDate(date);
     }
 
@@ -39,7 +39,8 @@ public class InternshipController {
 
     @GetMapping(path = "/internshipsByName")
     public Collection<Internship> getInternshipsOfName(
-            @RequestParam(name = "email") String email) {
-        return internshipDao.FindAllByEmail(email);
+            @RequestParam(name = "firstname") String firstname,
+            @RequestParam(name = "lastname") String lastname) {
+        return internshipDao.FindAllByFirstnameAndLastname(firstname, lastname);
     }
 }
