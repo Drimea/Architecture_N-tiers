@@ -71,7 +71,7 @@ public class InternshipControllerTest {
         String firstname = "Oui";
         String lastname = "Non";
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/internshipsByName?firstname=" + firstname+"&lastname=" + lastname)
+                .get("/internshipsByName?firstname=" + firstname + "&lastname=" + lastname)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

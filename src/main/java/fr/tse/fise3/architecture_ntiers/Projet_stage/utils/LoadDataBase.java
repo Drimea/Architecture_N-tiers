@@ -44,12 +44,8 @@ public class LoadDataBase {
         ent1.setNoSIRET(123456789);
         enterpriseDao.create(ent1);
 
-        User user1 = new User();
-        user1.setEmail("oui.non@telecom-st-etienne.fr");
-        user1.setFirstname("Oui");
-        user1.setLastname("Non");
-        user1.setPassword("0u1N0n");
-        userDao.create(user1);
+        User user1 = userDao.create("oui.non@telecom-st-etienne.fr",
+                "Oui", "Non", "0u1N0n");
 
         Internship internship1 = new Internship();
         internship1.setBeginDate(LocalDate.now());
