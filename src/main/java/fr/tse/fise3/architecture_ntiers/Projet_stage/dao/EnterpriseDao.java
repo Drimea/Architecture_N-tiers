@@ -21,7 +21,18 @@ public class EnterpriseDao {
     }
 
 
-    public void create(Enterprise enterprise) {
+    public Enterprise create(String name, String address, String city, String country,
+                       String activity, Integer noSIRET, Integer employeeNumber) {
+        Enterprise enterprise = new Enterprise();
+        enterprise.setName(name);
+        enterprise.setAddress(address);
+        enterprise.setCity(city);
+        enterprise.setCountry(country);
+        enterprise.setActivity(activity);
+        enterprise.setNoSIRET(noSIRET);
+        enterprise.setEmployeeNumber(employeeNumber);
         em.persist(enterprise);
+        LOG.info(enterprise + " saved to database.");
+        return enterprise;
     }
 }

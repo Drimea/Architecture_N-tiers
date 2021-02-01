@@ -32,7 +32,6 @@ public class InternshipControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     public void getInternshipsOfCountryTest() throws Exception{
         String country = "France";

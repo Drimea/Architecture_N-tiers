@@ -30,12 +30,14 @@ public class UserDao {
         newUser.setLastname(lastname);
         newUser.setPassword(password);
         em.persist(newUser);
+        LOG.info(newUser + " saved to database.");
         return newUser;
     }
 
 
     public void update(User user) {
         em.merge(user);
+        LOG.info(user + " updated in database.");
     }
 
     public User find(User user) {
@@ -46,6 +48,7 @@ public class UserDao {
     public void delete(User user) {
         User fromDB = em.getReference(User.class, user.getId());
         em.remove(fromDB);
+        LOG.info(user + " removed from database.");
     }
 
     public List<User> listUsers() {

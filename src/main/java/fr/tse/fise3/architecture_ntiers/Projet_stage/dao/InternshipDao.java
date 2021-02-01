@@ -1,6 +1,8 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage.dao;
 
+import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Enterprise;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Internship;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -38,8 +40,15 @@ public class InternshipDao {
         return q.getResultList();
     }
 
-    public void create(Internship internship) {
+    public void create(LocalDate beginDate, LocalDate endDate, String type, Enterprise enterprise, User intern) {
+        Internship internship = new Internship();
+        internship.setBeginDate(beginDate);
+        internship.setEndDate(endDate);
+        internship.setType(type);
+        internship.setEnterprise(enterprise);
+        internship.setIntern(intern);
         em.persist(internship);
+        LOG.info(internship + " saved to database.");
     }
 
     public List<Internship> FindAllByDate(LocalDate date) {
