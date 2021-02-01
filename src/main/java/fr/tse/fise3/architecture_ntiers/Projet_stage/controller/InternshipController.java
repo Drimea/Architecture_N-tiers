@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
 @RestController
 public class InternshipController {

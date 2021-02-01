@@ -34,15 +34,9 @@ public class LoadDataBase {
 
     private void initRepositories(InternshipDao internshipDao, UserDao userDao,
                                   EnterpriseDao enterpriseDao) {
-        Enterprise ent1 = new Enterprise();
-        ent1.setActivity("Rechecrhe");
-        ent1.setAddress("25 rue du Docteur Rémy Annino");
-        ent1.setCity("Saint-Etienne");
-        ent1.setCountry("France");
-        ent1.setEmployeeNumber(50);
-        ent1.setName("Laboratoire Hubert Curien");
-        ent1.setNoSIRET(123456789);
-        enterpriseDao.create(ent1);
+
+        Enterprise ent1 = enterpriseDao.create("Laboratoire Hubert Curien", "25 rue du Docteur Rémy Annino", "Saint-Etienne", "France",
+                "Rechecrhe", 123456789, 50);
 
         User user1 = userDao.create("oui.non@telecom-st-etienne.fr",
                 "Oui", "Non", "0u1N0n");
@@ -53,7 +47,7 @@ public class LoadDataBase {
         internship1.setEnterprise(ent1);
         internship1.setIntern(user1);
         internship1.setType("SFE");
-        internshipDao.create(internship1);
+        internshipDao.create(LocalDate.now(), LocalDate.of(2050, 11, 3), "SFE", ent1, user1);
     }
 
 
