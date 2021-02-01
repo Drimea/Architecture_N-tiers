@@ -12,15 +12,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-public class InternshipRepositoryTest {
+public class InternshipDaoTest {
 
     @Autowired
     private InternshipDao internshipDao;
