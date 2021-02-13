@@ -17,7 +17,7 @@ public class Mobility {
     private LocalDate beginDate;
     private LocalDate endDate;
     @ManyToOne
-    @JsonIgnoreProperties("internships")
+    @JsonIgnoreProperties("mobilities")
     @JoinColumn(name="USER_ID", nullable=false)
     private User student;
 }
