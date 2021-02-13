@@ -2,6 +2,7 @@ package fr.tse.fise3.architecture_ntiers.Projet_stage;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.utils.Constants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class UserDaoTest {
     public void createAndDeleteUserTest() {
         int sizeDao = userDao.listUsers().size();
         User testUser = userDao.create("test@test.test", "Testfirstname",
-                "Testlastname", "M0tDeP4ss3");
+                "Testlastname", "M0tDeP4ss3", Constants.TYPE_USER_CITISE1);
         assertEquals(sizeDao+1, userDao.listUsers().size());
         assertNotNull(userDao.find(testUser));
 
@@ -34,7 +35,7 @@ public class UserDaoTest {
     public void createAndUpdateUserTest() {
         int sizeDao = userDao.listUsers().size();
         User testUser = userDao.create("test@test.test", "Testfirstname",
-                "Testlastname", "M0tDeP4ss3");
+                "Testlastname", "M0tDeP4ss3", Constants.TYPE_USER_ADMIN);
         assertEquals(sizeDao+1, userDao.listUsers().size());
         assertNotNull(userDao.find(testUser));
 

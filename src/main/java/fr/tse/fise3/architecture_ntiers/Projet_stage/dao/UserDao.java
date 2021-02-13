@@ -23,12 +23,13 @@ public class UserDao {
     }
 
 
-    public User create(String email, String firstname, String lastname, String password) {
+    public User create(String email, String firstname, String lastname, String password, String typeUser) {
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setFirstname(firstname);
         newUser.setLastname(lastname);
         newUser.setPassword(password);
+        newUser.setTypeUser(typeUser);
         em.persist(newUser);
         LOG.info(newUser + " saved to database.");
         return newUser;

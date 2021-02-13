@@ -39,7 +39,7 @@ public class LoadDataBase {
                 "Rechecrhe", 123456789, 50);
 
         User user1 = userDao.create("oui.non@telecom-st-etienne.fr",
-                "Oui", "Non", "0u1N0n");
+                "Oui", "Non", "0u1N0n", Constants.TYPE_USER_FISE2);
 
         Internship internship1 = new Internship();
         internship1.setBeginDate(LocalDate.now());
