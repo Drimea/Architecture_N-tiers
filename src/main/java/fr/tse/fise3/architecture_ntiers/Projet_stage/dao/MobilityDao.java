@@ -1,6 +1,7 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage.dao;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +28,7 @@ public class MobilityDao {
     }
 
     // Cette méthode couvre l'ensemble des requêtes (croisées ou non) possible.
-    public List<Mobility> findAllByCriteria(Map<String, String> criteria) {
+    public List<Mobility> findAllByCriteria(Map<String, Object> criteria) {
         String stringQuery = "SELECT DISTINCT m FROM Mobility m JOIN m.student s ";
 
         if (criteria.size() != 0) {
@@ -69,6 +71,7 @@ public class MobilityDao {
             }
             stringQuery += ":date BETWEEN m.beginDate AND m.endDate ";
         }
+        System.out.println(stringQuery);
 
         Query q = em.createQuery(stringQuery);
 
@@ -85,9 +88,20 @@ public class MobilityDao {
             q.setParameter("email", criteria.get("email"));
         }
         if (criteria.containsKey("date")) {
-            q.setParameter("date", criteria.get("date"));
+            q.setParameter("date", (LocalDate) criteria.get("date"));
         }
 
         return q.getResultList();
+    }
+
+    public void create(User student, String country, String city, LocalDate beginDate, LocalDate endDate) {
+        Mobility mobility = new Mobility();
+        mobility.setStudent(student);
+        mobility.setCountry(country);
+        mobility.setCity(city);
+        mobility.setBeginDate(beginDate);
+        mobility.setEndDate(endDate);
+        em.persist(mobility);
+        LOG.info(mobility + " saved to Database.");
     }
 }

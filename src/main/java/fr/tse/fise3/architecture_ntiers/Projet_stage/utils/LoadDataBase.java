@@ -3,9 +3,11 @@ package fr.tse.fise3.architecture_ntiers.Projet_stage.utils;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.EnterpriseDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.InternshipDao;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.MobilityDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Enterprise;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Internship;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -25,21 +27,26 @@ public class LoadDataBase {
     @Profile("test")
     CommandLineRunner initDatabase(InternshipDao internshipDao,
                                    UserDao userDao,
-                                   EnterpriseDao enterpriseDao) {
+                                   EnterpriseDao enterpriseDao,
+                                   MobilityDao mobilityDao) {
 
         return args -> {
-            initRepositories(internshipDao, userDao, enterpriseDao);
+            initRepositories(internshipDao, userDao, enterpriseDao, mobilityDao);
         };
     }
 
     private void initRepositories(InternshipDao internshipDao, UserDao userDao,
-                                  EnterpriseDao enterpriseDao) {
+                                  EnterpriseDao enterpriseDao, MobilityDao mobilityDao) {
 
         Enterprise ent1 = enterpriseDao.create("Laboratoire Hubert Curien", "25 rue du Docteur Rémy Annino", "Saint-Etienne", "France",
                 "Rechecrhe", 123456789, 50);
 
         User user1 = userDao.create("oui.non@telecom-st-etienne.fr",
                 "Oui", "Non", "0u1N0n", Constants.TYPE_USER_FISE2);
+
+
+        mobilityDao.create(user1, "France", "Saint-Etienne", LocalDate.now(),
+                LocalDate.of(2050, 11, 3));
 
         Internship internship1 = new Internship();
         internship1.setBeginDate(LocalDate.now());
