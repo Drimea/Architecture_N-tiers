@@ -1,6 +1,7 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.utils.Constants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -55,7 +52,9 @@ public class MobilityControllerTest {
                         + "&firstname=" + firstname
                         + "&lastname=" + lastname
                         + "&email=" + email
-                        + "&date=" + date.format(DateTimeFormatter.ISO_DATE))
+                        + "&date=" + date.format(DateTimeFormatter.ISO_DATE)
+                        + "&typeUser=" + Constants.TYPE_USER_FISE2
+                )
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

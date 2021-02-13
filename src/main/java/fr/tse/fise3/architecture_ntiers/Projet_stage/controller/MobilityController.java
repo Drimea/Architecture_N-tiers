@@ -26,7 +26,8 @@ public class MobilityController {
                                            @RequestParam(required = false) String firstname,
                                            @RequestParam(required = false) String lastname,
                                            @RequestParam(required = false) String email,
-                                           @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+                                           @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                           @RequestParam(required = false) String typeUser) {
         Map<String, Object> criteria = new HashMap<>();
         if (country != null) {
             criteria.put("country", country);
@@ -42,6 +43,9 @@ public class MobilityController {
         }
         if (date != null) {
             criteria.put("date", date);
+        }
+        if (typeUser != null) {
+            criteria.put("typeUser", typeUser);
         }
         return mobilityDao.findAllByCriteria(criteria);
     }

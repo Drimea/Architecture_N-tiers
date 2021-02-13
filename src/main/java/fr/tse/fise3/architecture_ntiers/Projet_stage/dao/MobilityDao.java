@@ -29,6 +29,8 @@ public class MobilityDao {
 
     // Cette méthode couvre l'ensemble des requêtes (croisées ou non) possible.
     public List<Mobility> findAllByCriteria(Map<String, Object> criteria) {
+        // Il s'agit d'une query JPQL qui ressemble au SQL mais qui fonctionne
+        // un peu différemment.
         String stringQuery = "SELECT DISTINCT m FROM Mobility m JOIN m.student s ";
 
         if (criteria.size() != 0) {
@@ -70,6 +72,13 @@ public class MobilityDao {
                 stringQuery += "AND ";
             }
             stringQuery += ":date BETWEEN m.beginDate AND m.endDate ";
+            hasCriteriaBefore = true;
+        }
+        if (criteria.containsKey("typeUser")) {
+            if (hasCriteriaBefore) {
+                stringQuery += "AND ";
+            }
+            stringQuery += "s.typeUser = :typeUser ";
         }
 
         Query q = em.createQuery(stringQuery);
@@ -88,6 +97,9 @@ public class MobilityDao {
         }
         if (criteria.containsKey("date")) {
             q.setParameter("date", (LocalDate) criteria.get("date"));
+        }
+        if (criteria.containsKey("typeUser")) {
+            q.setParameter("typeUser", criteria.get("typeUser"));
         }
 
         return q.getResultList();

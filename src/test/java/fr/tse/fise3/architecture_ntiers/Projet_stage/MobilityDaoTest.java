@@ -1,7 +1,6 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.MobilityDao;
-import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Internship;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
