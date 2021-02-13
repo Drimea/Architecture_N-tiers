@@ -71,7 +71,6 @@ public class MobilityDao {
             }
             stringQuery += ":date BETWEEN m.beginDate AND m.endDate ";
         }
-        System.out.println(stringQuery);
 
         Query q = em.createQuery(stringQuery);
 
