@@ -18,13 +18,16 @@ public class User {
     private String firstname;
     private String lastname;
     private String password;
+    private String typeUser;
 
-    @OneToMany(mappedBy="intern", fetch = FetchType.EAGER, cascade={CascadeType.ALL}, orphanRemoval=true)
-    @JsonIgnoreProperties("intern")
+
+    @OneToMany(mappedBy="student", fetch = FetchType.EAGER, cascade={CascadeType.ALL}, orphanRemoval=true)
+    @JsonIgnoreProperties("student")
     @EqualsAndHashCode.Exclude
-    private Set<Internship> internships;
+    private Set<Mobility> mobilities;
 
     public User() {
-        this.internships = new HashSet<Internship>();
+        this.mobilities = new HashSet<Mobility>();
     }
+
 }
