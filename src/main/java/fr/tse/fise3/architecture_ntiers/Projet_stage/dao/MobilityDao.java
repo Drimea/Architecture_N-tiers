@@ -112,6 +112,7 @@ public class MobilityDao {
         mobility.setCity(city);
         mobility.setBeginDate(beginDate);
         mobility.setEndDate(endDate);
+        mobility.setSubmissionDate(LocalDate.now());
         em.persist(mobility);
         LOG.info(mobility + " saved to Database.");
     }

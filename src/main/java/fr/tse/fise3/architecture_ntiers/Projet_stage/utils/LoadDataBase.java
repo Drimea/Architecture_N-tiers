@@ -31,6 +31,7 @@ public class LoadDataBase {
 
         User user1 = userDao.create("oui.non@telecom-st-etienne.fr",
                 "Oui", "Non", "0u1N0n", Constants.TYPE_USER_FISE2);
+        
 
 
         mobilityDao.create(user1, "France", "Saint-Etienne", LocalDate.now(),
