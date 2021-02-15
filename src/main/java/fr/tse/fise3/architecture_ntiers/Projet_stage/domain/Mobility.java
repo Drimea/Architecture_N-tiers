@@ -16,6 +16,7 @@ public class Mobility {
     private String country;
     private LocalDate beginDate;
     private LocalDate endDate;
+    private LocalDate submissionDate;
     @ManyToOne
     @JsonIgnoreProperties("mobilities")
     @JoinColumn(name="USER_ID", nullable=false)
