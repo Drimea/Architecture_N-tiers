@@ -68,4 +68,14 @@ public class MobilityController {
         }
         return mobilityDao.update(mobility);
     }
+
+    @DeleteMapping(path="/mobilities/{mobilityId}")
+    public boolean deleteMobility(@PathVariable Long mobilityId) {
+        Mobility mobility = mobilityDao.findById(mobilityId);
+        if (mobility==null) {
+            return false;
+        }
+        mobilityDao.delete(mobility);
+        return true;
+    }
 }
