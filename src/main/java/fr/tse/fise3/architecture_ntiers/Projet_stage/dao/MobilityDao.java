@@ -117,6 +117,7 @@ public class MobilityDao {
 
     public void delete(Mobility mobility) {
         Mobility fromDB = em.getReference(Mobility.class, mobility.getId());
+        fromDB.getStudent().getMobilities().remove(fromDB);
         em.remove(fromDB);
         LOG.info(fromDB + " removed from database.");
     }
