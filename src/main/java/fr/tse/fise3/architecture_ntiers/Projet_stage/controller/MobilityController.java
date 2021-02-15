@@ -1,9 +1,12 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage.controller;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.MobilityDao;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,6 +21,9 @@ public class MobilityController {
 
     @Autowired
     MobilityDao mobilityDao;
+
+    @Autowired
+    UserDao userDao;
 
     @GetMapping(path = "/mobilities")
     public List<Mobility> getAllByCriteria(@RequestParam(required = false) String country,
@@ -48,6 +54,18 @@ public class MobilityController {
         return mobilityDao.findAllByCriteria(criteria);
     }
 
+    @PostMapping(path = "/mobilities")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long postMobility(@RequestBody Map<String, String> bodyPost) {
+        String country = bodyPost.get("country");
+        String city = bodyPost.get("city");
+        LocalDate beginDate = LocalDate.parse(bodyPost.get("beginDate"));
+        LocalDate endDate = LocalDate.parse(bodyPost.get("endDate"));
+        User user = userDao.findUserById(Long.parseLong(bodyPost.get("idUser")));
+        Mobility mobility = mobilityDao.create(user, country, city, beginDate, endDate);
+        return mobility.getId();
+    }
+
     @PatchMapping(path="/mobilities/{mobilityId}")
     public Mobility patchMobility(@PathVariable Long mobilityId, @RequestBody Map<String, Object> bodyPatch) {
         Mobility mobility = mobilityDao.findById(mobilityId);
@@ -67,5 +85,15 @@ public class MobilityController {
             mobility.setEndDate(LocalDate.parse(bodyPatch.get("endDate").toString(), DateTimeFormatter.ISO_DATE));
         }
         return mobilityDao.update(mobility);
+    }
+
+    @DeleteMapping(path="/mobilities/{mobilityId}")
+    public boolean deleteMobility(@PathVariable Long mobilityId) {
+        Mobility mobility = mobilityDao.findById(mobilityId);
+        if (mobility==null) {
+            return false;
+        }
+        mobilityDao.delete(mobility);
+        return true;
     }
 }

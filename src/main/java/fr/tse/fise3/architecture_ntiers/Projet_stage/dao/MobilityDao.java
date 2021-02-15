@@ -117,11 +117,12 @@ public class MobilityDao {
 
     public void delete(Mobility mobility) {
         Mobility fromDB = em.getReference(Mobility.class, mobility.getId());
+        fromDB.getStudent().getMobilities().remove(fromDB);
         em.remove(fromDB);
         LOG.info(fromDB + " removed from database.");
     }
 
-    public void create(User student, String country, String city, LocalDate beginDate, LocalDate endDate) {
+    public Mobility create(User student, String country, String city, LocalDate beginDate, LocalDate endDate) {
         Mobility mobility = new Mobility();
         mobility.setStudent(student);
         mobility.setCountry(country);
@@ -131,5 +132,6 @@ public class MobilityDao {
         mobility.setSubmissionDate(LocalDate.now());
         em.persist(mobility);
         LOG.info(mobility + " saved to Database.");
+        return mobility;
     }
 }

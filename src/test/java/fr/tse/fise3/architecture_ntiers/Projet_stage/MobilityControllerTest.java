@@ -2,6 +2,7 @@ package fr.tse.fise3.architecture_ntiers.Projet_stage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.MobilityDao;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.utils.Constants;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
@@ -36,6 +38,9 @@ public class MobilityControllerTest {
 
     @Autowired
     private MobilityDao mobilityDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Test
     public void getAllByDateTest() throws Exception {
@@ -68,6 +73,38 @@ public class MobilityControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    public void postAndDeleteTest() throws Exception {
+        int numberOfMobilities = mobilityDao.findAllByCriteria(new HashMap<>()).size();
+        Map<String, String> bodyPost = new HashMap<>();
+        bodyPost.put("country", "Espagne");
+        bodyPost.put("city", "Madrid");
+        bodyPost.put("beginDate", LocalDate.of(2025, 1, 1).format(DateTimeFormatter.ISO_DATE));
+        bodyPost.put("endDate", LocalDate.of(2025, 6, 15).format(DateTimeFormatter.ISO_DATE));
+        bodyPost.put("idUser", userDao.findUserByEmail("oui.non@telecom-st-etienne.fr").getId().toString());
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders
+                .post("/mobilities")
+                .content(asJsonString(bodyPost))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn()
+        ;
+        assertEquals(numberOfMobilities + 1, mobilityDao.findAllByCriteria(new HashMap<>()).size());
+        String idNewMobilityString = response.getResponse().getContentAsString();
+        Long idNewMobility = Long.parseLong(idNewMobilityString);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/mobilities/" + idNewMobility)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", is(true)))
+        ;
+        System.out.println(mobilityDao.findAllByCriteria(new HashMap<>()));
+        assertEquals(numberOfMobilities, mobilityDao.findAllByCriteria(new HashMap<>()).size());
     }
 
     @Test
