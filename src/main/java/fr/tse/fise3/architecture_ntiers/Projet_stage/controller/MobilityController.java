@@ -1,7 +1,9 @@
 package fr.tse.fise3.architecture_ntiers.Projet_stage.controller;
 
 import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.MobilityDao;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.UserDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
+import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class MobilityController {
 
     @Autowired
     MobilityDao mobilityDao;
+
+    @Autowired
+    UserDao userDao;
 
     @GetMapping(path = "/mobilities")
     public List<Mobility> getAllByCriteria(@RequestParam(required = false) String country,
@@ -46,6 +51,17 @@ public class MobilityController {
             criteria.put("typeUser", typeUser);
         }
         return mobilityDao.findAllByCriteria(criteria);
+    }
+
+    @PostMapping(path = "/mobilities")
+    public Mobility postMobility(@RequestBody Map<String, String> bodyPost) {
+        String country = bodyPost.get("country");
+        String city = bodyPost.get("city");
+        LocalDate beginDate = LocalDate.parse(bodyPost.get("beginDate"));
+        LocalDate endDate = LocalDate.parse(bodyPost.get("endDate"));
+        User user = userDao.findUserById(Long.parseLong(bodyPost.get("idUser")));
+        Mobility mobility = mobilityDao.create(user, country, city, beginDate, endDate);
+        return mobility;
     }
 
     @PatchMapping(path="/mobilities/{mobilityId}")

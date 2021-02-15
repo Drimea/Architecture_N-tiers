@@ -71,6 +71,11 @@ public class MobilityControllerTest {
     }
 
     @Test
+    public void postAndDeleteTest() throws Exception {
+        
+    }
+
+    @Test
     public void patchMobilityTest() throws Exception {
 
         Map<String, Object> criteria = new HashMap<>();
