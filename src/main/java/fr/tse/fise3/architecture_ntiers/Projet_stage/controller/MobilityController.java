@@ -4,12 +4,10 @@ import fr.tse.fise3.architecture_ntiers.Projet_stage.dao.MobilityDao;
 import fr.tse.fise3.architecture_ntiers.Projet_stage.domain.Mobility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,5 +46,26 @@ public class MobilityController {
             criteria.put("typeUser", typeUser);
         }
         return mobilityDao.findAllByCriteria(criteria);
+    }
+
+    @PatchMapping(path="/mobilities/{mobilityId}")
+    public Mobility patchMobility(@PathVariable Long mobilityId, @RequestBody Map<String, Object> bodyPatch) {
+        Mobility mobility = mobilityDao.findById(mobilityId);
+        if (mobility == null){
+            return null;
+        }
+        if (bodyPatch.containsKey("country")) {
+            mobility.setCountry(bodyPatch.get("country").toString());
+        }
+        if (bodyPatch.containsKey("city")) {
+            mobility.setCity(bodyPatch.get("city").toString());
+        }
+        if (bodyPatch.containsKey("beginDate")) {
+            mobility.setBeginDate(LocalDate.parse(bodyPatch.get("beginDate").toString(), DateTimeFormatter.ISO_DATE));
+        }
+        if (bodyPatch.containsKey("endDate")) {
+            mobility.setEndDate(LocalDate.parse(bodyPatch.get("endDate").toString(), DateTimeFormatter.ISO_DATE));
+        }
+        return mobilityDao.update(mobility);
     }
 }
