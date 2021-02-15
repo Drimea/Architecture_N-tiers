@@ -3,6 +3,7 @@ package fr.tse.fise3.architecture_ntiers.Projet_stage.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"password"})
 public class User {
     @Id
     @GeneratedValue
@@ -23,6 +25,7 @@ public class User {
 
     @OneToMany(mappedBy="student", fetch = FetchType.EAGER, cascade={CascadeType.ALL}, orphanRemoval=true)
     @JsonIgnoreProperties("student")
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Mobility> mobilities;
 

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,10 +61,10 @@ public class MobilityController {
             mobility.setCity(bodyPatch.get("city").toString());
         }
         if (bodyPatch.containsKey("beginDate")) {
-            mobility.setBeginDate((LocalDate) bodyPatch.get("beginDate"));
+            mobility.setBeginDate(LocalDate.parse(bodyPatch.get("beginDate").toString(), DateTimeFormatter.ISO_DATE));
         }
         if (bodyPatch.containsKey("endDate")) {
-            mobility.setEndDate((LocalDate) bodyPatch.get("endDate"));
+            mobility.setEndDate(LocalDate.parse(bodyPatch.get("endDate").toString(), DateTimeFormatter.ISO_DATE));
         }
         return mobilityDao.update(mobility);
     }
