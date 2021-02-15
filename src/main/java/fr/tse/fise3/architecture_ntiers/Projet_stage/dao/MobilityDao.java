@@ -105,6 +105,22 @@ public class MobilityDao {
         return q.getResultList();
     }
 
+    public Mobility findById(Long id) {
+        return em.find(Mobility.class, id);
+    }
+
+    public Mobility update(Mobility mobility) {
+        em.merge(mobility);
+        LOG.info(mobility + " updated in database.");
+        return this.findById(mobility.getId());
+    }
+
+    public void delete(Mobility mobility) {
+        Mobility fromDB = em.getReference(Mobility.class, mobility.getId());
+        em.remove(fromDB);
+        LOG.info(fromDB + " removed from database.");
+    }
+
     public void create(User student, String country, String city, LocalDate beginDate, LocalDate endDate) {
         Mobility mobility = new Mobility();
         mobility.setStudent(student);
