@@ -50,7 +50,7 @@ public class LoadDataBase {
         mobilityDao.create(user2, "Japon", "Tokyo",
                 LocalDate.of(2049, 11, 3),
                 LocalDate.of(2050, 11, 3));
-        mobilityDao.create(user3, "Angleterre", "Londre",
+        mobilityDao.create(user3, "Angleterre", "Londres",
                 LocalDate.of(2049, 5, 3),
                 LocalDate.of(2050, 5, 3));
     }
